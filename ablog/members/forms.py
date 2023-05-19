@@ -16,7 +16,6 @@ class ProfilePageForm(forms.ModelForm):
             'twitter_url': forms.TextInput(attrs={'class': 'form-control'}),
             'instagram_url': forms.TextInput(attrs={'class': 'form-control'}),
             'pinterest_url': forms.TextInput(attrs={'class': 'form-control'}),
-
         }
 
 
