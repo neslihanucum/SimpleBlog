@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Posts</h1>
+    <ul>
+        {% for post in object_list %}
+            <li>
+                <a href="{% url 'theblog:article-detail' post.pk  %}">
+                    {{ post.title }}
+                </a>
+                -
+                <a href="{% url 'theblog:category' post.category|slugify  %}">
+                    {{ post.category }}
+                </a>
+                - {{ post.author.first_name }}
+                {{ post.author.last_name }} /
+                {{ post.post_date }}
+
+                {% if user.is_authenticated %}
+                    {% if user.id == post.author.id %}
+                        - <small>
+                            <a href="{% url 'theblog:update_post' post.pk %}">
+                                Edit
+                            </a> -
+                            <a href="{% url 'theblog:delete_post' post.pk %}">
+                                Delete
+                            </a>
+                        </small>
+                    {% endif %}
+                {% endif %}
+                <br>
+                {{ post.body|slice:":200"|safe|striptags }}
+                <!-- anasayfada maks. 200 karakter gösterir -->
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

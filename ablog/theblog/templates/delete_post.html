@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Delete Blog Post{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}
+            <!-- eğer giriş yapan kullanıcı ile postu oluşturan
+            kullanıcı aynı ise bu işlemi gerçekleştirebilsin
+            bu if satırını article_tails, update_post
+            ve home.html'de de kullandık.-->
+            <h1>Delete Post...</h1>
+            <br><br>
+            <h3>Delete: {{ post.title }}</h3>
+            <br>
+            <div class="form-group">
+                <form method="POST">
+                    {% csrf_token %}
+                    <!--
+                    {{ form.as_p }}
+                    yorum satırına aldık çünkü formun tamamına ihtiyacımız yok,
+                    çünkü hiçbir şey update vs. etmiycez tek ihtiyacımız olan
+                    bunu silmekten emin misin diyen buton
+                    -->
+                    <strong>Are you sure?</strong>
+                    <br><br>
+                    <button class="btn btn-secondary">
+                        Delete Post!
+                    </button>
+                    <br><br>
+                    <a href="{% url 'theblog:home' %}" class="btn btn-secondary">
+                        No, go back
+                    </a>
+                </form>
+            </div>
+        {% else %}
+            You're not allowed here!
+        {% endif %}
+    {% else %}
+        You're not allowed here! Please login.
+    {% endif %}
+{% endblock %}
